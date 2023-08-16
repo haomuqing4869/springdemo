@@ -8,6 +8,18 @@ spring:
     username: root
     password: 12345
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # Redis连接信息
+  redis:
+    host: localhost
+    port: 6379
+    # 无密码保护，请留空或删除这行配置
+    password:
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 5
+        min-idle: 1
+        max-wait: 3000
 mybatis:
   mapperLocations: classpath*:mapping/mybatis/*.xml
   typeAliasesPackage: com.example.springdemo.mybatis.entity
