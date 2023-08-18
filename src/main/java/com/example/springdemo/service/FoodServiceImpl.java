@@ -3,16 +3,17 @@ package com.example.springdemo.service;
 import com.example.springdemo.mybatis.dao.FoodMapper;
 import com.example.springdemo.mybatis.entity.Food;
 
-//@Autowired 是一个 Spring 注解，用于进行依赖注入。通过在需要依赖的字段、构造函数或方法上加上 @Autowired 注解，
-// Spring 将会自动将相应的依赖对象注入进去，无需手动实例化。
 import org.springframework.beans.factory.annotation.Autowired;
 
-//@Service 是一个 Spring 注解，用于标记一个类为服务类（Service class）。通过将 @Service 注解应用在类上，Spring 将会自动扫描该类，
-// 并创建一个该类的实例，以供其他组件使用。
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/*
+FoodMapper 是一个用于操作数据库的映射器（Mapper），它提供了对 Food 实体类的数据库操作方法。
+在 FoodServiceImpl 类中，通过在构造函数上使用 @Autowired 注解，将 FoodMapper 对象注入到类的成员变量 foodMapper 中。
+然后，在类中实现了 FoodService 接口中定义的各个方法。这些方法的实现都是调用 foodMapper 对象的相应方法来进行数据库操作。
+* */
 @Service
 public class FoodServiceImpl implements FoodService {
     private final FoodMapper foodMapper; // 注入 FoodMapper

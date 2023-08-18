@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/login}" method="post">
+    <!--
+    th:action="@{/login}"：Thymeleaf的URL表达式，用于指定表单提交的目标URL。
+    @{/login}表示相对于当前上下文路径（context path）的/login路径，它会根据项目的配置生成正确的URL路径。
+
+    Thymeleaf 是一种服务器端 Java 模板引擎，用于构建基于服务器端的 Web 应用程序。
+    它可以集成到基于 Java 的 Web 框架（如Spring Boot）中，并提供动态生成 HTML、XML、JavaScript、CSS 等内容的能力。
+    -->
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" />
+    </div>
+    <button type="submit">Login</button>
+</form>
+</body>
+</html>

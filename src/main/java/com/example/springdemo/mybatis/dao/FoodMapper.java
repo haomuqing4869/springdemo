@@ -57,6 +57,7 @@ public interface FoodMapper {
      */
     int updateByPrimaryKey(Food record);
 
+    // 自定义SQL方法
     @Select("SELECT * FROM food")
     List<Food> selectALL();
 }

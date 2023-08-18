@@ -1,25 +1,59 @@
+# Tomcat 服务器的相关配置
 server:
+  # 设置Tomcat服务器运行端口号
   port: 8088
+  # Servlet 的相关配置
   servlet:
+    # 指定应用程序的上下文路径为 "/springdemo"
     context-path: /springdemo
+
+# Spring 框架的配置项
 spring:
+  # 数据源的相关配置，用于连接数据库。
   datasource:
+    # 指定数据库的连接 URL，这里使用 MySQL 数据库
     url: jdbc:mysql://127.0.0.1:3306/ssmtest?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8&allowMultiQueries=true
+    # 数据库用户名
     username: root
+    # 数据库密码
     password: 12345
+    # 指定数据库驱动为 "com.mysql.cj.jdbc.Driver"
     driver-class-name: com.mysql.cj.jdbc.Driver
-  # Redis连接信息
+
+  # Redis 缓存的相关配置
   redis:
+    # 指定 Redis 服务器的主机名
     host: localhost
+    # 指定 Redis 服务器的端口号
     port: 6379
     # 无密码保护，请留空或删除这行配置
     password:
+
+    # Jedis 相关配置
     jedis:
+      # 连接池的相关配置
       pool:
+        # 连接池中的最大活跃连接数
         max-active: 10
+        # 连接池中的最大空闲连接数
         max-idle: 5
+        # 连接池中的最小空闲连接数
         min-idle: 1
+        # 获取连接的最大等待时间为 3000 毫秒
         max-wait: 3000
+
+  # Thymeleaf 模板引擎的相关配置
+  thymeleaf:
+    # 是否启用 Thymeleaf 模板引擎 ：enabled 设置为 true 表示启用 Thymeleaf 模板引擎
+    enabled: true
+    # 模板文件所在的路径（模板文件的前缀）默认是 classpath:/templates/
+    prefix: classpath:/templates/
+    # 模板文件的后缀，默认是 ".html"
+    suffix: .html
+
+# MyBatis 持久化框架的配置项
 mybatis:
+  # Mapper 文件（XML 文件）的路径，默认是 classpath*:mapping/mybatis/*.xml。
   mapperLocations: classpath*:mapping/mybatis/*.xml
+  # Entity 类的包路径
   typeAliasesPackage: com.example.springdemo.mybatis.entity

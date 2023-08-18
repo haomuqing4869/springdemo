@@ -54,6 +54,7 @@ public interface UserMapper {
      */
     int updateByPrimaryKey(User record);
 
+    // 自定义SQL方法
     @Select("SELECT * FROM users WHERE username = #{username}")
     User selectByUsername(String username);
 }
