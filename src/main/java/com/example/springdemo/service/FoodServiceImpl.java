@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 // 并创建一个该类的实例，以供其他组件使用。
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FoodServiceImpl implements FoodService {
     private final FoodMapper foodMapper; // 注入 FoodMapper
@@ -48,6 +50,11 @@ public class FoodServiceImpl implements FoodService {
     @Override
     public int updateByPrimaryKey(Food record) {
         return foodMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<Food> getALL() {
+        return foodMapper.selectALL();
     }
 }
 

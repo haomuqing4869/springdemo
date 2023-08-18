@@ -3,6 +3,8 @@ package com.example.springdemo.service;
 //import com.example.springdemo.mybatis.dao.FoodMapper;
 import com.example.springdemo.mybatis.entity.Food;
 
+import java.util.List;
+
 //@Autowired 是一个 Spring 注解，用于进行依赖注入。通过在需要依赖的字段、构造函数或方法上加上 @Autowired 注解，
 // Spring 将会自动将相应的依赖对象注入进去，无需手动实例化。
 //import org.springframework.beans.factory.annotation.Autowired;
@@ -26,4 +28,6 @@ public interface FoodService {
     int updateByPrimaryKeySelective(Food record);
 
     int updateByPrimaryKey(Food record);
+
+    List<Food> getALL();
 }

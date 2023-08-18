@@ -2,7 +2,6 @@ package com.example.springdemo.config;
 
 import com.example.springdemo.mybatis.entity.User;
 import com.example.springdemo.service.UserService;
-import com.example.springdemo.service.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -40,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/public").permitAll() // 设置公共访问的路径
                 .antMatchers("/api/user").hasRole("USER")
                 .antMatchers("/api/admin").hasRole("ADMIN")
+                .antMatchers("/food/**").permitAll() // 设置与 "/springdemo/food/" 相关的所有路径无需认证
                 .anyRequest().authenticated()
                 .and()
                 .formLogin();

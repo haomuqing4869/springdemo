@@ -1,7 +1,11 @@
 package com.example.springdemo.mybatis.dao;
 
 import com.example.springdemo.mybatis.entity.Food;
+import com.example.springdemo.mybatis.entity.User;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface FoodMapper {
@@ -52,4 +56,7 @@ public interface FoodMapper {
      * @mbg.generated Fri Aug 18 13:08:55 CST 2023
      */
     int updateByPrimaryKey(Food record);
+
+    @Select("SELECT * FROM food")
+    List<Food> selectALL();
 }

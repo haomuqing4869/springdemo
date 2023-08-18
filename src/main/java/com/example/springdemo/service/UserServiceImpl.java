@@ -35,11 +35,8 @@ public class UserServiceImpl implements UserService {
         User user = userMapper.selectByUsername(username);
         if (user != null) {
             roles.add("ROLE_USER");
-//            System.out.println("ROLE_USER");
-//            System.out.println(user.getRole().contains("ADMIN"));
             if (user.getRole().contains("ADMIN")) { // 判断用户是否包含 "admin" 角色
                 roles.add("ROLE_ADMIN");
-//                System.out.println("ROLE_ADMIN");
             }
         }
         return roles;

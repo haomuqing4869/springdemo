@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -22,6 +23,14 @@ public class FoodController {
     public FoodController(FoodService foodService, StringRedisTemplate redisTemplate) {
         this.foodService = foodService;
         this.redisTemplate = redisTemplate;
+    }
+
+    @RequestMapping("/get/all")
+    public String getAllFoods() throws JsonProcessingException {
+        List<Food> foods = foodService.getALL();
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(foods);
+        return jsonString;
     }
 
     @RequestMapping("/get/{id}")
