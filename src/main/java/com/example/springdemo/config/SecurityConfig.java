@@ -39,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .csrf().disable()
                 // 开始对请求进行授权的配置
                 .authorizeRequests()
+                .antMatchers("/index.html").permitAll()
                 // 允许对 "/api/public" 路径的请求进行公共访问，即无需任何身份验证即可访问。
                 .antMatchers("/api/public").permitAll()
                 // 要求对 "/api/user" 路径的请求具有 "USER" 角色的身份验证。

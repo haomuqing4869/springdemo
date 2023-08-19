@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>动态生成表格</title>
+</head>
+<body>
+<table id="foodTable">
+    <thead>
+    <tr id="headerRow"></tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<!-- 前端应用是基于JavaScript的应用，通过AJAX或Fetch API与后端进行通信，获取JSON数据并进行展示和交互 -->
+<script>
+    /*
+    在ES6之后，推荐使用 let 或 const 关键字来声明变量，而避免使用 var 关键字。
+
+    var 是旧版的变量声明关键字，在全局作用域中存在变量提升、可以被重新声明等特性，容易引发一些难以察觉和调试的问题。
+    而 let 和 const 是ES6引入的块级作用域变量声明关键字，它们具有更好的作用域控制和可预测性。
+
+    如果需要重新赋值，则使用 let，否则使用 const 来声明常量。
+
+
+    var、let 和 const 是 JavaScript 中用于声明变量的关键字，它们有以下区别：
+    -- 作用域：var 关键字声明的变量具有函数作用域或全局作用域，而 let 和 const 关键字声明的变量具有块级作用域。
+       在块级作用域内（例如条件语句或循环中），使用 let 或 const 声明的变量只在该块级作用域内可见，而 var 声明的变量在整个函数内部都可见。
+
+    -- 变量提升：使用 var 声明的变量会发生变量提升，即变量可以在声明之前被访问，但其值为 undefined；
+       而使用 let 或 const 声明的变量不会发生变量提升，变量必须在声明后才能被访问。
+
+    -- 重复声明：使用 var 可以多次声明同一个变量，并且不会报错；而使用 let 或 const 在同一作用域内重复声明同一个变量会导致语法错误。
+
+    -- 可变性：使用 var 或 let 声明的变量可以重新赋值，而使用 const 声明的变量是常量，其值在声明后不能再改变。
+
+    推荐在现代 JavaScript 中使用 let 和 const 来声明变量，因为它们提供了更好的作用域控制和可预测性，同时避免了一些常见的问题。
+    只有当需要显式地允许变量重新赋值时，才使用 let；而当变量的值不需要改变时，应该使用 const 来声明常量。
+    * */
+
+    // ************************************ 使用AJAX ************************************ //
+
+    // // 创建了一个XMLHttpRequest对象 xhr ，它用于发送HTTP请求并接收响应。
+    // const xhr = new XMLHttpRequest();
+    //
+    // // 定义一个 onreadystatechange 事件处理函数，该函数在 xhr 对象状态改变时被触发。
+    // xhr.onreadystatechange = function() {
+    //     // 当 xhr 的 readyState 状态为4（已完成）且 status 状态为200（成功）时，表示成功接收到后端返回的响应。
+    //     if (xhr.readyState === 4 && xhr.status === 200) {
+    //         const backendData = JSON.parse(xhr.responseText);
+    //         // 通过调用 generateTable() 函数并传入从后端获取的数据 backendData 来生成表格
+    //         generateTable(backendData);
+    //     }
+    // };
+    //
+    // // 通过 xhr.open() 方法打开一个GET请求，并指定要发送请求的URL
+    // xhr.open("GET", "http://127.0.0.1:8088/springdemo/food/get/all", true);
+    // // 调用 xhr.send() 方法发送HTTP请求
+    // xhr.send();
+
+    // ************************************ 使用AJAX ************************************ //
+
+    // ************************************ 使用Fetch ************************************ //
+
+    /*
+    Fetch API 是现代浏览器原生支持的 API，而 AJAX 是一个较早的技术，已经存在多年，并得到广泛支持。
+    因此，Fetch API 可能无法在一些旧版本的浏览器中正常工作，而 AJAX 具有较好的兼容性。
+    * */
+    // 使用 Fetch API 发起了一个 GET 请求到指定的 URL
+    fetch("http://127.0.0.1:8088/springdemo/food/get/all")
+        // 使用 .then() 方法链式地处理响应结果
+        // .then() 方法接受一个回调函数作为参数，该回调函数将在异步操作成功完成后被调用，并接收上一步操作的结果作为参数。
+        .then(response => { // 检查response
+            if (response.ok) { // 检查了响应的 ok 属性，如果为 true，表示请求成功
+                // 将响应数据解析为 JSON 格式并返回
+                return response.json();
+            } else {
+                // 如果 ok 属性为 false，则抛出一个错误
+                throw new Error("Network response was not ok.");
+            }
+        })
+        .then(data => { // 将返回的 JSON 数据传递给 generateTable 函数进行处理和生成表格
+            generateTable(data);
+        })
+        .catch(error => { // 使用 .catch() 捕获任何可能发生的错误，并在控制台输出错误信息
+            console.error("Error:", error);
+        });
+
+    // ************************************ 使用Fetch ************************************ //
+
+    // 定义一个名为 generateTable() 的函数，该函数用于根据后端返回的数据动态生成表格
+    function generateTable(data) {
+        // 通过使用 document.querySelector() 方法选择要插入表格内容的 <tbody> 元素和 <tr> 元素（表头所在的行）#id
+        const tableBody = document.querySelector("#foodTable tbody");
+        const headerRow = document.querySelector("#headerRow");
+
+        /*
+        * JSON[
+        * { "id" : 1, "name" : "鱼香肉", "price" : "15元", "msg" : "好吃", "date" : "2018年07月29日 10:05:41" },
+        * { "id" : 2, "name" : "宫保鸡丁", "price" : "15元", "msg" : "食堂阿姨推荐", "date" : "2018年06月11日 00:59:31" },
+        * { "id" : 3, "name" : "地三鲜", "price" : "10元", "msg" : "好吃不上火", "date" : "2018年06月11日 01:02:37" }
+        * ]
+        * */
+        // 动态生成表头
+        for (let key in data[0]) {
+            // 使用 document.createElement() 方法创建一个 <th> 元素
+            const th = document.createElement("th");
+            // 将键的值赋给 <th> 元素的 textContent 属性
+            th.textContent = key;
+            // 将该 <th> 元素追加到表头所在的行中（<tr>元素）
+            headerRow.appendChild(th);
+        }
+
+        // 动态生成表格内容
+        for (let i = 0; i < data.length; i++) {
+            // 使用 document.createElement() 方法创建一个 <tr> 元素（表示表格中的一行）
+            const row = document.createElement("tr");
+
+            // 在内层循环中，遍历每个对象的键
+            for (let key in data[i]) {
+                // 使用 document.createElement() 方法创建一个 <td> 元素
+                const cell = document.createElement("td");
+                // 将对象的键对应的值赋给 <td> 元素的 textContent 属性
+                cell.textContent = data[i][key];
+                // 将该 <td> 元素追加到当前行（<tr>元素）中
+                row.appendChild(cell);
+            }
+
+            // 将生成的行（<tr>元素）追加到表格体（<tbody>元素）中
+            tableBody.appendChild(row);
+        }
+    }
+</script>
+</body>
+</html>
